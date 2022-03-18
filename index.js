@@ -104,7 +104,7 @@ function viewAllEmployees() {
         console.log('\n');
         console.log('VIEW ALL EMPLOYEES');
         console.log('\n');
-        console.table(res);
+        console.log(res);
         prompt();
     });
 }
@@ -277,7 +277,7 @@ function askId() {
         {
             name: "name",
             type: "input",
-            message: "What is the employe ID?:  "
+            message: "What is the employee ID?:  "
         }
     ]);
 }

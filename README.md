@@ -5,4 +5,4 @@
 * npm i inquirer - to use inquirer (to interact with the user via command line)
 * npm init - to create a json file
 * npm i mysql - to connect to MySql database
-* npm console.table - to format tables
+* npm console.table --save - to format tables
