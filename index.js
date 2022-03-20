@@ -104,7 +104,7 @@ function viewAllEmployees() {
         console.log('\n');
         console.log('VIEW ALL EMPLOYEES');
         console.log('\n');
-        console.log(res);
+        console.table(res);
         prompt();
     });
 }
