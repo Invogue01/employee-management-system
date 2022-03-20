@@ -34,6 +34,8 @@
 
   [Browser based Video Walkthrough. Click Download/View Raw to display](./images-video/Employee-Management.mp4)
 
+  [Or follow this link](https://drive.google.com/file/d/1OLHCCVuTju-WYRoyN_AGGUyltzVMndnW/view)
+
 ---
 
   ## Installation:
