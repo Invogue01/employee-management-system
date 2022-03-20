@@ -31,7 +31,9 @@
 ---
   ## Visuals:
 
-  ![]()
+  ![Code sample](./images-video/EMScode.png)
+
+  [Browser based Video Walkthrough. Click Download/View Raw to display](./video/appVideo.webm)
 
 ---
 
