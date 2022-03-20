@@ -6,7 +6,6 @@
 
   [![License: AGPL v3](https://img.shields.io/badge/License-AGPL%20v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
 
-  [A deployed version can be viewed here.](https://github.com/Invogue01/employee-management-system)
   
 ---
   ## Contents
