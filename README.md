@@ -24,7 +24,7 @@
 ---
   ## About
 
-  Track, store and update your employees salary, managers, departments and contact details
+  Track, store and update your employees salary, managers, departments and more.
   
   
 ---
@@ -32,7 +32,7 @@
 
   ![Code sample](./images-video/EMScode.png)
 
-  [Browser based Video Walkthrough. Click Download/View Raw to display](./video/appVideo.webm)
+  [Browser based Video Walkthrough. Click Download/View Raw to display](./images-video/Employee-Management.mp4)
 
 ---
 
