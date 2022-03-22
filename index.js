@@ -37,6 +37,75 @@ connection.connect(err => {
     prompt();
 });
 
+// populate entire employee list
+function viewAllEmployees() {
+    const query = `SELECT employee.id, employee.first_name, employee.last_name, role.title, department.name AS department, role.salary, CONCAT(manager.first_name, ' ', manager.last_name) AS manager
+    FROM employee
+    LEFT JOIN employee manager on manager.id = employee.manager_id
+    INNER JOIN role ON (role.id = employee.role_id)
+    INNER JOIN department ON (department.id = role.department_id)
+    ORDER BY employee.id;`;
+    connection.query(query, (err, res) => {
+        if (err) throw err;
+        console.log('\n');
+        console.log('VIEW ALL EMPLOYEES');
+        console.log('\n');
+        console.table(res);
+        prompt();
+    });
+}
+// sort list by Department
+function viewByDepartment() {
+    const query = `SELECT department.name AS department, role.title, employee.id, employee.first_name, employee.last_name
+    FROM employee
+    LEFT JOIN role ON (role.id = employee.role_id)
+    LEFT JOIN department ON (department.id = role.department_id)
+    ORDER BY department.name;`;
+    connection.query(query, (err, res) => {
+        if (err) throw err;
+        console.log('\n');
+        console.log('VIEW EMPLOYEE BY DEPARTMENT');
+        console.log('\n');
+        console.table(res);
+        prompt();
+    });
+}
+
+// sort list by Manager
+function viewByManager() {
+    const query = `SELECT CONCAT(manager.first_name, ' ', manager.last_name) AS manager, department.name AS department, employee.id, employee.first_name, employee.last_name, role.title
+    FROM employee
+    LEFT JOIN employee manager on manager.id = employee.manager_id
+    INNER JOIN role ON (role.id = employee.role_id && employee.manager_id != 'NULL')
+    INNER JOIN department ON (department.id = role.department_id)
+    ORDER BY manager;`;
+    connection.query(query, (err, res) => {
+        if (err) throw err;
+        console.log('\n');
+        console.log('VIEW EMPLOYEE BY MANAGER');
+        console.log('\n');
+        console.table(res);
+        prompt();
+    });
+}
+// employee current role/ job title
+function viewAllRoles() {
+    const query = `SELECT role.title, employee.id, employee.first_name, employee.last_name, department.name AS department
+    FROM employee
+    LEFT JOIN role ON (role.id = employee.role_id)
+    LEFT JOIN department ON (department.id = role.department_id)
+    ORDER BY role.title;`;
+    connection.query(query, (err, res) => {
+        if (err) throw err;
+        console.log('\n');
+        console.log('VIEW EMPLOYEE BY ROLE');
+        console.log('\n');
+        console.table(res);
+        prompt();
+    });
+
+}
+
 function prompt() {
     inquirer
         .prompt({
@@ -92,74 +161,7 @@ function prompt() {
         });
 }
 
-function viewAllEmployees() {
-    const query = `SELECT employee.id, employee.first_name, employee.last_name, role.title, department.name AS department, role.salary, CONCAT(manager.first_name, ' ', manager.last_name) AS manager
-    FROM employee
-    LEFT JOIN employee manager on manager.id = employee.manager_id
-    INNER JOIN role ON (role.id = employee.role_id)
-    INNER JOIN department ON (department.id = role.department_id)
-    ORDER BY employee.id;`;
-    connection.query(query, (err, res) => {
-        if (err) throw err;
-        console.log('\n');
-        console.log('VIEW ALL EMPLOYEES');
-        console.log('\n');
-        console.table(res);
-        prompt();
-    });
-}
-
-function viewByDepartment() {
-    const query = `SELECT department.name AS department, role.title, employee.id, employee.first_name, employee.last_name
-    FROM employee
-    LEFT JOIN role ON (role.id = employee.role_id)
-    LEFT JOIN department ON (department.id = role.department_id)
-    ORDER BY department.name;`;
-    connection.query(query, (err, res) => {
-        if (err) throw err;
-        console.log('\n');
-        console.log('VIEW EMPLOYEE BY DEPARTMENT');
-        console.log('\n');
-        console.table(res);
-        prompt();
-    });
-}
-
-
-function viewByManager() {
-    const query = `SELECT CONCAT(manager.first_name, ' ', manager.last_name) AS manager, department.name AS department, employee.id, employee.first_name, employee.last_name, role.title
-    FROM employee
-    LEFT JOIN employee manager on manager.id = employee.manager_id
-    INNER JOIN role ON (role.id = employee.role_id && employee.manager_id != 'NULL')
-    INNER JOIN department ON (department.id = role.department_id)
-    ORDER BY manager;`;
-    connection.query(query, (err, res) => {
-        if (err) throw err;
-        console.log('\n');
-        console.log('VIEW EMPLOYEE BY MANAGER');
-        console.log('\n');
-        console.table(res);
-        prompt();
-    });
-}
-
-function viewAllRoles() {
-    const query = `SELECT role.title, employee.id, employee.first_name, employee.last_name, department.name AS department
-    FROM employee
-    LEFT JOIN role ON (role.id = employee.role_id)
-    LEFT JOIN department ON (department.id = role.department_id)
-    ORDER BY role.title;`;
-    connection.query(query, (err, res) => {
-        if (err) throw err;
-        console.log('\n');
-        console.log('VIEW EMPLOYEE BY ROLE');
-        console.log('\n');
-        console.table(res);
-        prompt();
-    });
-
-}
-
+// Employee add function 
 async function addEmployee() {
     const addname = await inquirer.prompt(askName());
     connection.query('SELECT role.id, role.title FROM role ORDER BY role.id;', async (err, res) => {
@@ -226,6 +228,7 @@ async function addEmployee() {
     });
 
 }
+// remove function using employees ID
 function remove(input) {
     const promptQ = {
         yes: "yes",
@@ -248,7 +251,7 @@ function remove(input) {
 
     });
 };
-
+// adds employee removal function
 async function removeEmployee() {
 
     const answer = await inquirer.prompt([
@@ -282,7 +285,7 @@ function askId() {
     ]);
 }
 
-
+// adds the ability to update employee details
 async function updateRole() {
     const employeeId = await inquirer.prompt(askId());
 
@@ -312,7 +315,7 @@ async function updateRole() {
         });
     });
 }
-
+// if employee ID is not known use Name
 function askName() {
     return ([
         {
